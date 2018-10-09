@@ -73,7 +73,6 @@ module.exports = {
   plugins: [
     new WebpackBuildNotifierPlugin({
       title: 'node-app',
-      suppressSuccess: true
     }),
     new ExtractTextPlugin({filename: 'style.css'}),
     new HtmlWebpackPlugin({

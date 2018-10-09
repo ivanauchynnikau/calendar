@@ -1,40 +1,21 @@
-export default ( state={ events: [] }, action) => {
-  switch(action.type) {
-    case 'CALENDAR_LOADED':
-      console.log(action);
-      return {
-        ...state,
-        events: action.data,
-      };
-    // case 'SUBMIT_ARTICLE':
-    //   return {
-    //     ...state,
-    //     articles: ([action.data.article]).concat(state.articles),
-    //   };
-    // case 'DELETE_ARTICLE':
-    //   return {
-    //     ...state,
-    //     articles: state.articles.filter((article) => article._id !== action.id),
-    //   };
-    // case 'SET_EDIT':
-    //   return {
-    //     ...state,
-    //     articleToEdit: action.article,
-    //   };
-    // case 'EDIT_ARTICLE':
-    //   return {
-    //     ...state,
-    //     articles: state.articles.map((article) => {
-    //       if(article._id === action.data.article._id) {
-    //         return {
-    //           ...action.data.article,
-    //         }
-    //       }
-    //       return article;
-    //     }),
-    //     articleToEdit: undefined,
-    //   };
-    default:
-      return state;
-  }
-};
+import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions';
+import * as actions from './../../actions/calendar';
+import { initialState } from './../initialState';
+
+const calendarInit = handleActions({
+  [actions.setCalendarPreferences](state = initialState, payload) {
+    return {
+      ...state,
+        events: payload.events,
+        todayISODate: payload.todayISODate,
+        todayDateStr: payload.todayDateStr,
+        dayHours: payload.dayHours,
+        weekDays: payload.weekDays,
+    };
+  },
+}, {});
+
+export default combineReducers({
+  calendarInit,
+});

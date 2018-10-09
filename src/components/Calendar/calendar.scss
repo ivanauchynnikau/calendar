@@ -1,3 +1,39 @@
 .calendar {
-  background: red;
+  &__container {
+    position: relative;
+    padding-left: 60px;
+  }
+  &__header {
+    z-index: 1;
+    background: #7dbad8;
+    padding: 10px;
+  }
+  &__title {
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+  }
+  &__days {
+    display: flex;
+    overflow: auto;
+  }
+  &__today {
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+  }
+  &__hours-list {
+    box-shadow: 2px 0 2px 0 #aab3b7;
+    position: absolute;
+    left: 0;
+    width: 60px;
+    background: #fff;
+    top: 0;
+    padding-top: 32px;
+  }
+  &__hour {
+    padding: 0 10px 15px 10px;
+    min-height: 35px;
+    background: #fff;
+  }
 }

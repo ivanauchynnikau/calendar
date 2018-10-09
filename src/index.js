@@ -7,8 +7,9 @@ import { Route, Switch, Router } from 'react-router-dom';
 import store from './components/store';
 import { App } from './components';
 
+import './components/App/app.scss';
 import './components/Calendar/calendar.scss';
-import './components/Calendar/Event/event.scss';
+import './components/Calendar/Day/day.scss';
 
 
 ReactDOM.render(

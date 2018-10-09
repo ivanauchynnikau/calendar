@@ -1,0 +1,18 @@
+.day {
+  min-width: 200px;
+  border-right: 1px solid lightgrey;
+  &__header {
+    padding: 12px;
+  }
+  &__date {
+    text-align: center;
+  }
+  &__hour {
+    padding: 5px;
+    min-height: 40px;
+    background: #eaeaea;
+    &:nth-child(odd) {
+      background: #f3f3f3;
+    }
+  }
+}

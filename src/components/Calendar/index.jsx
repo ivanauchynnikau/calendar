@@ -1,8 +1,18 @@
 import React from 'react';
-//import moment from 'moment';
-import DATA from './../../../DATA';
+import EVENTS from './../../../EVENTS';
 import { connect } from 'react-redux';
+import { Day } from './Day';
+import {
+  calendarLoaded,
+} from './../../actions/calendar';
 
+import {
+  getToday,
+  setCalendarPreferences,
+  formatDateToHumanReadable,
+  createDayHours,
+  createWeekDays,
+} from './../../utils/calendar-utils';
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -10,46 +20,52 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    const { onLoad } = this.props;
+    setCalendarPreferences();
+
     // TODO add load from server, with setTimeout
-    onLoad(DATA);
+
+    calendarInit({
+      events: EVENTS,
+      todayISODate: getToday(),
+      todayDateStr: formatDateToHumanReadable(),
+      dayHours: createDayHours(),
+      weekDays: createWeekDays(),
+    });
   }
 
   render() {
-    const {events} = this.props;
+    const {
+      todayDateStr,
+      dayHours,
+      weekDays,
+    } = this.props;
 
     return (
       <div className="calendar">
-        <h1 className="calendar__title">Calendar</h1>
-        <h2 className="calendar__today">TODAY</h2>
-        <div className="calendar__week">
-          {events.map((event, index) => {
-            return (
-              <div key={index} className="event">
-                <div className="event__name">
-                  { event.name }
-                </div>
-                <div className="event__start">
-                  { event.startDate }
-                </div>
-                <div className="event__end">
-                  { event.endDate }
-                </div>
-              </div>
-            )
-          })}
+        <div className="calendar__header">
+          <h1 className="calendar__title">Calendar</h1>
+          <h2 className="calendar__today">Today is: {todayDateStr}</h2>
         </div>
+        <div className="calendar__container">
+          <div className="calendar__hours-list">
+
+          </div>
+        </div>
+
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  events: state.calendar.events,
-});
+const mapStateToProps = ({ calendar, calendarInit }) => {
+  return {
+    events: calendar.events,
+    todayDateStr: calendar.todayDateStr,
+    todayISODate: calendar.todayISODate,
+    dayHours: calendar.dayHours,
+    weekDays: calendar.weekDays,
+    calendarInit
+  }
+};
 
-const mapDispatchToProps = dispatch => ({
-  onLoad: data => dispatch({type: 'CALENDAR_LOADED', data})
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default connect(mapStateToProps)(Calendar);
