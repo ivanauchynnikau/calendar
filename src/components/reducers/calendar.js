@@ -1,21 +1,17 @@
-import { combineReducers } from 'redux';
-import { handleActions } from 'redux-actions';
-import * as actions from './../../actions/calendar';
 import { initialState } from './../initialState';
 
-const calendarInit = handleActions({
-  [actions.setCalendarPreferences](state = initialState, payload) {
-    return {
-      ...state,
-        events: payload.events,
-        todayISODate: payload.todayISODate,
-        todayDateStr: payload.todayDateStr,
-        dayHours: payload.dayHours,
-        weekDays: payload.weekDays,
-    };
-  },
-}, {});
-
-export default combineReducers({
-  calendarInit,
-});
+export default (state = initialState, action) => {
+  switch(action.type) {
+    case 'INIT':
+      return {
+        ...state,
+        events: action.data.events,
+        todayDateStr: action.data.todayDateStr,
+        todayISOCode: action.data.todayISOCode,
+        dayHours: action.data.dayHours,
+        weekDays: action.data.weekDays,
+      };
+    default:
+      return initialState;
+  }
+};

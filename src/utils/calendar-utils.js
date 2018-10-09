@@ -2,7 +2,7 @@ import moment from "moment";
 import {HOURS_PER_DAY, LOCALE, MOMENT_JS_CONFIG} from "../../config";
 import {DD_MM_YYYY, HH_mm} from "../constants/formats";
 
-export const setCalendarPreferences = () => {
+export const setPreferences = () => {
   moment.locale(LOCALE, MOMENT_JS_CONFIG);
 };
 

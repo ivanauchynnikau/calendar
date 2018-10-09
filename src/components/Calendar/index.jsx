@@ -2,13 +2,10 @@ import React from 'react';
 import EVENTS from './../../../EVENTS';
 import { connect } from 'react-redux';
 import { Day } from './Day';
-import {
-  calendarLoaded,
-} from './../../actions/calendar';
 
 import {
   getToday,
-  setCalendarPreferences,
+  setPreferences,
   formatDateToHumanReadable,
   createDayHours,
   createWeekDays,
@@ -18,13 +15,12 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
   }
-
   componentDidMount() {
-    setCalendarPreferences();
+    setPreferences();
 
-    // TODO add load from server, with setTimeout
+    const { initStore } = this.props;
 
-    calendarInit({
+    initStore({
       events: EVENTS,
       todayISODate: getToday(),
       todayDateStr: formatDateToHumanReadable(),
@@ -36,8 +32,8 @@ class Calendar extends React.Component {
   render() {
     const {
       todayDateStr,
-      dayHours,
       weekDays,
+      dayHours,
     } = this.props;
 
     return (
@@ -48,24 +44,39 @@ class Calendar extends React.Component {
         </div>
         <div className="calendar__container">
           <div className="calendar__hours-list">
-
+            {dayHours.map((hour, index) => {
+              return (
+                <div key={index} className="calendar__hour">
+                  {hour}
+                </div>
+              )
+            })}
+          </div>
+          <div className="calendar__days">
+            {weekDays.map((day, index) => {
+              return (
+                <Day key={index} day={day} dayHours={dayHours}/>
+              )
+            })}
           </div>
         </div>
-
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ calendar, calendarInit }) => {
+const mapStateToProps = (state) => {
   return {
-    events: calendar.events,
-    todayDateStr: calendar.todayDateStr,
-    todayISODate: calendar.todayISODate,
-    dayHours: calendar.dayHours,
-    weekDays: calendar.weekDays,
-    calendarInit
+    events: state.calendar.events,
+    todayDateStr: state.calendar.todayDateStr,
+    todayISODate: state.calendar.todayISODate,
+    dayHours: state.calendar.dayHours,
+    weekDays: state.calendar.weekDays,
   }
 };
 
-export default connect(mapStateToProps)(Calendar);
+const mapDispatchToProps = dispatch => ({
+  initStore: data => dispatch({ type: 'INIT', data }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

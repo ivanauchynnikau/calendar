@@ -23,13 +23,14 @@
     font-size: 20px;
   }
   &__hours-list {
-    box-shadow: 2px 0 2px 0 #aab3b7;
     position: absolute;
     left: 0;
-    width: 60px;
-    background: #fff;
+    bottom: 0;
     top: 0;
+    width: 60px;
     padding-top: 32px;
+    background: #fff;
+    box-shadow: 2px 0 2px 0 #aab3b7;
   }
   &__hour {
     padding: 0 10px 15px 10px;
