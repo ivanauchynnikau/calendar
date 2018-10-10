@@ -1,6 +1,6 @@
 import moment from "moment";
 import {HOURS_PER_DAY, LOCALE, MOMENT_JS_CONFIG} from "../../config";
-import {DD_MM_YYYY, HH_mm} from "../constants/formats";
+import {FORMAT_LL, FORMAT_HH_mm} from "../constants/formats";
 
 export const setPreferences = () => {
   moment.locale(LOCALE, MOMENT_JS_CONFIG);
@@ -13,7 +13,7 @@ export const getToday = () => {
 };
 
 export const formatDateToHumanReadable = (dateISOString) => {
-  const date = moment(dateISOString).format(DD_MM_YYYY);
+  const date = moment(dateISOString).format(FORMAT_LL);
 
   return date;
 };
@@ -24,7 +24,7 @@ export const createDayHours = () => {
   let formattedTime = [];
 
   for (let i = 1; i < hoursPerDay + 1; i++) {
-    formattedTime = (moment('2001-01-01').subtract(i, 'hours')).format(HH_mm);
+    formattedTime = (moment('2001-01-01').subtract(i, 'hours')).format(FORMAT_HH_mm);
     oneDayHoursArray.unshift(formattedTime);
   }
 

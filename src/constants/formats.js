@@ -1,2 +1,2 @@
-export const DD_MM_YYYY = 'DD-MM-YYYY';
-export const HH_mm = 'HH:mm';
+export const FORMAT_LL = 'LL';
+export const FORMAT_HH_mm = 'HH:mm';

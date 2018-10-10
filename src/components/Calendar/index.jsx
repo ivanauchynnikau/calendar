@@ -2,6 +2,7 @@ import React from 'react';
 import EVENTS from './../../../EVENTS';
 import { connect } from 'react-redux';
 import { Day } from './Day';
+import moment from 'moment';
 
 import {
   getToday,
