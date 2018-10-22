@@ -9,6 +9,7 @@ import {
   setPreferences,
   createDayHours,
   createWeekDays,
+  getEventsForPeriod,
 } from './../../utils/calendar-utils';
 
 
@@ -17,7 +18,7 @@ class Calendar extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     setPreferences();
 
     const {initStore} = this.props;
@@ -36,6 +37,9 @@ class Calendar extends React.Component {
       dayHours,
       todayDate,
     } = this.props;
+
+    const date = moment(todayDate);
+    const weekEvents = getEventsForPeriod('week', date, EVENTS);
 
     return (
       <div className="calendar">
@@ -58,6 +62,7 @@ class Calendar extends React.Component {
               return (
                 <Day
                   key={index}
+                  events={weekEvents}
                   today={todayDate}
                   day={day}
                   dayHours={dayHours}/>

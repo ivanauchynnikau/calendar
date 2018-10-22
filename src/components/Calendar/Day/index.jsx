@@ -1,4 +1,9 @@
 import React from 'react';
+import moment from 'moment';
+
+import {
+  getEventsForPeriod,
+} from './../../../utils/calendar-utils';
 
 export class Day extends React.Component {
   constructor(props) {
@@ -9,11 +14,24 @@ export class Day extends React.Component {
     const {
       dayHours,
       day,
-      today
+      today,
+      events
     } = this.props;
 
+
+
+    const dayEvents = getEventsForPeriod('day', moment(day.date), events);
+    console.log('events for current day - ', day.formattedDate, dayEvents);
+
+
+
+    //TODO fix detect current day logic!!!!!
+
     let className = 'day';
-    if (today.unix() === day.date) {
+    console.log(today.toISOString());
+    console.log(day.date);
+
+    if (today.toISOString() === day.date) {
       className += ' _current-day';
     }
 
