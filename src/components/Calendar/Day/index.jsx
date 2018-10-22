@@ -1,6 +1,4 @@
 import React from 'react';
-import connect from "react-redux/es/connect/connect";
-
 
 export class Day extends React.Component {
   constructor(props) {
@@ -11,12 +9,19 @@ export class Day extends React.Component {
     const {
       dayHours,
       day,
+      today
     } = this.props;
 
+    let className = 'day';
+    if (today.unix() === day.date) {
+      className += ' _current-day';
+    }
+
     return (
-      <div className="day">
+      <div className={className}>
         <div className="day__header">
-          <div className="day__date">{day}</div>
+          <div className="day__day-name">{day.name}</div>
+          <div className="day__date">{day.formattedDate}</div>
         </div>
         <div className="day__hours-container">
           {dayHours.map((hour, index) => {

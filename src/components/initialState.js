@@ -1,8 +1,6 @@
 export const initialState = {
   events: [],
-  todayISODate: '',
-  todayDateStr: '',
+  todayDate: '',
   dayHours: [],
   weekDays: [],
-  currentDay: ''
 };

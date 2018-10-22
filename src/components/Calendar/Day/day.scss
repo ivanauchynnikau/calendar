@@ -1,20 +1,32 @@
 .day {
-  border-right: 1px solid lightgrey;
-  min-width: 180px;
+  min-width: 220px;
   border-right: 1px solid lightgrey;
   width: calc((100% / 7) - 1px);
+  &._current-day {
+    background: #eee;
+  }
   &__header {
     padding: 12px;
   }
+  &__day-name {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
   &__date {
+    color: gray;
+    font-size: 14px;
     text-align: center;
   }
   &__hour {
     padding: 5px;
     min-height: 40px;
-    background: #eaeaea;
-    &:nth-child(odd) {
-      background: #f3f3f3;
+    border-bottom: 1px solid grey;
+    &:first-child {
+      border-top: 1px solid grey;
+    }
+    &:last-child {
+      border-bottom: none;
     }
   }
 }

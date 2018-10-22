@@ -6,8 +6,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         events: action.data.events,
-        todayDateStr: action.data.todayDateStr,
-        todayISOCode: action.data.todayISOCode,
+        todayDate: action.data.todayDate,
         dayHours: action.data.dayHours,
         weekDays: action.data.weekDays,
       };

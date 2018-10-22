@@ -4,7 +4,7 @@
   "description": "simple week view calendar",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open"
+    "dev": "webpack-dev-server --mode development --open"
   },
   "devDependencies": {
     "babel": "^6.23.0",
