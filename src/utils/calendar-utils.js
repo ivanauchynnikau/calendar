@@ -37,6 +37,8 @@ export const createDayHours = (date) => {
     console.log('getEventsForCurrentHour method is expecting arguments "date"!!!!!');
     return null;
   }
+
+
   let momentDate = moment(date);
   let hoursPerDay = HOURS_PER_DAY;
   let oneDayHoursArray = [];
@@ -72,11 +74,7 @@ export const createWeekDays = () => {
 };
 
 export const getStartEndDateForPeriod = (periodType, date) => {
-  if (!periodType || !date) {
-    console.log('getEventsForCurrentHour method is expecting arguments "periodType" and "date"!!!!!');
-    return null;
-  }
-
+  if (!periodType || !date ) return returnError('getEventsForCurrentHour', '"periodType" and "date"');
 
   const momentDate = moment(date);
   let result = {};
@@ -113,10 +111,7 @@ export const getStartEndDateForPeriod = (periodType, date) => {
 };
 
 export const getEventsForPeriod = (periodType, date, events) => {
-  if (!periodType || !date || !events) {
-    console.log('getEventsForCurrentHour method is expecting arguments "periodType" and "events" and "date"!!!!!');
-    return null;
-  }
+  if (!periodType || !date || !events) return returnError('getEventsForCurrentHour', '"periodType" and "events" and "date"');
 
   const period = getStartEndDateForPeriod(periodType, date);
   const result = [];
@@ -135,10 +130,7 @@ export const getEventsForPeriod = (periodType, date, events) => {
 };
 
 export const getEventsForCurrentHour = (date, events) => {
-  if (!events || !date) {
-    console.log('getEventsForCurrentHour method is expecting arguments "events" and "date"!!!!!');
-    return null;
-  }
+  if (!events || !date) return returnError('getEventsForCurrentHour', '"events" and "date"');
 
   // console.log('date', date);
 
@@ -170,10 +162,8 @@ export const getEventsForCurrentHour = (date, events) => {
 };
 
 export const calculateEventHeight = (event) => {
-  if (!event) {
-    console.log('calculateEventHeight method is expecting argument "event"!!!!!');
-    return null;
-  }
+  if (!event) if (!event) return returnError('calculateEventHeight', "event");
+
 
   let elementHeight;
   const eventDurationMinutes = Math.abs(moment(event.startDate).diff(moment(event.endDate), 'minutes'));
@@ -193,6 +183,35 @@ export const calculateEventHeight = (event) => {
   };
 
   return result;
+};
+
+export const calculateEventTopOffset = (event, date) => {
+  if (!event) return returnError('calculateEventHeight', "event");
+
+  const period = getStartEndDateForPeriod('hour', date);
+
+  let topOffset = 0;
+
+  if (!(moment(event.startDate).isSame(moment(period.startHour)))) {
+    const eventStartOffsetMinutes = Math.abs(moment(event.startDate).diff(moment(period.startHour), 'minutes'));
+
+    topOffset = eventStartOffsetMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR - EVENT_PADDING * 2;
+  }
+
+  const result = {
+    top: `${Math.round(topOffset)}px`,
+    position: 'relative',
+  };
+
+  return result;
+};
+
+
+
+
+export const returnError = (name, args) => {
+  console.log(`${name} method is expecting argument "${args}"!!!!!`);
+  return null;
 };
 
 

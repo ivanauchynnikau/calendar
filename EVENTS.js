@@ -51,5 +51,10 @@ export default [
     startDate: moment('2018-11-26 11:00:00').format(),
     endDate: moment('2018-11-26 12:59:59').format(),
     description: 'Some text that describe event details etc..'
-  }
+  }, {
+    name: '2018-10-26 11:30 - 16:00',
+    startDate: moment('2018-10-26 11:30:00').format(),
+    endDate: moment('2018-10-26 16:29:29').format(),
+    description: 'Some text that describe event details etc..'
+  },
 ];

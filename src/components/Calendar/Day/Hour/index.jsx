@@ -35,7 +35,7 @@ export class Hour extends React.Component {
   render() {
     const {
       date,
-      events
+      events,
     } = this.props;
 
     const eventsList = getEventsForCurrentHour( date.time, events);
@@ -48,6 +48,7 @@ export class Hour extends React.Component {
               <Event
                 key={index}
                 event={event}
+                date={date.time}
                 index={index}
                 isManyEvents={eventsList.length > MAX_EVENTS_PER_HOUR_LIMIT}
               />

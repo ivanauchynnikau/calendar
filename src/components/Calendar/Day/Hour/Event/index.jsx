@@ -1,6 +1,11 @@
 import React from 'react';
 import { MAX_EVENTS_PER_HOUR_LIMIT } from '../../../../../../config';
-import { calculateEventHeight } from '../../../../../utils/calendar-utils'
+import {
+  calculateEventHeight,
+  calculateEventTopOffset
+} from '../../../../../utils/calendar-utils'
+
+
 export class Event extends React.Component {
   constructor(props) {
     super(props);
@@ -8,9 +13,11 @@ export class Event extends React.Component {
     this.getEventsStyles = this.getEventsStyles.bind(this);
   }
 
-  getEventsStyles(index, event, isManyEvents) {
+  getEventsStyles(index, event, isManyEvents, date) {
     let eventElementStyles = {};
+
     eventElementStyles = Object.assign(eventElementStyles, calculateEventHeight(event));
+    eventElementStyles = Object.assign(eventElementStyles, calculateEventTopOffset(event, date));
 
     if (isManyEvents) {
       eventElementStyles = Object.assign(eventElementStyles, {
@@ -34,11 +41,12 @@ export class Event extends React.Component {
     const {
       event,
       index,
+      date,
       isManyEvents
     } = this.props;
 
     return (
-      <div style={this.getEventsStyles(index, event, isManyEvents)} className="event">
+      <div style={this.getEventsStyles(index, event, isManyEvents, date)} className="event">
         <div className="event__title">{event.name}</div>
         <div className="event__text">{event.description}</div>
       </div>

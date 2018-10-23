@@ -9,5 +9,5 @@ export const MOMENT_JS_CONFIG = {
 
 export const HOUR_CELL_HEIGHT = 65;
 export const MINUTES_PER_HOUR = 60;
-export const EVENT_PADDING = 2;
+export const EVENT_PADDING = 3;
 export const MAX_EVENTS_PER_HOUR_LIMIT = 2;
