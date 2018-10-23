@@ -1,8 +1,10 @@
 import React from 'react';
-import moment from 'moment';
+import { Hour } from './Hour';
 
 import {
   getEventsForPeriod,
+  createDayHours,
+  getTodayStartOfDayDate,
 } from './../../../utils/calendar-utils';
 
 export class Day extends React.Component {
@@ -12,26 +14,15 @@ export class Day extends React.Component {
 
   render() {
     const {
-      dayHours,
       day,
-      today,
       events
     } = this.props;
 
-
-
-    const dayEvents = getEventsForPeriod('day', moment(day.date), events);
-    console.log('events for current day - ', day.formattedDate, dayEvents);
-
-
-
-    //TODO fix detect current day logic!!!!!
+    const dayHours = createDayHours(day.date);
+    const dayEvents = getEventsForPeriod('day', day.date, events);
 
     let className = 'day';
-    console.log(today.toISOString());
-    console.log(day.date);
-
-    if (today.toISOString() === day.date) {
+    if (getTodayStartOfDayDate() === day.date) {
       className += ' _current-day';
     }
 
@@ -42,11 +33,12 @@ export class Day extends React.Component {
           <div className="day__date">{day.formattedDate}</div>
         </div>
         <div className="day__hours-container">
-          {dayHours.map((hour, index) => {
+          {dayHours.map((date, index) => {
             return (
-              <div key={index} className="day__hour">
-
-              </div>
+              <Hour
+                key={index}
+                date={date}
+                events={dayEvents}/>
             )
           })}
         </div>

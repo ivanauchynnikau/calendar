@@ -1,15 +1,20 @@
 import React from 'react';
 import EVENTS from './../../../EVENTS';
+import moment from 'moment';
 import {connect} from 'react-redux';
 import {Day} from './Day';
-import {FORMAT_LL} from '../../constants'
-import moment from 'moment';
+import {
+  FORMAT_HH_mm,
+  FORMAT_LL,
+} from '../../constants'
 
 import {
   setPreferences,
   createDayHours,
   createWeekDays,
   getEventsForPeriod,
+  getTodayStartOfDayDate,
+  getTodayDate
 } from './../../utils/calendar-utils';
 
 
@@ -21,12 +26,10 @@ class Calendar extends React.Component {
   componentWillMount() {
     setPreferences();
 
-    const {initStore} = this.props;
+    const { initStore } = this.props;
 
     initStore({
       events: EVENTS,
-      todayDate: moment(),
-      dayHours: createDayHours(),
       weekDays: createWeekDays(),
     });
   }
@@ -34,12 +37,13 @@ class Calendar extends React.Component {
   render() {
     const {
       weekDays,
-      dayHours,
-      todayDate,
     } = this.props;
 
-    const date = moment(todayDate);
-    const weekEvents = getEventsForPeriod('week', date, EVENTS);
+    const todayDate = getTodayDate();
+    const todayDateDayStart = getTodayStartOfDayDate();
+    const dayHours = createDayHours(todayDateDayStart);
+
+    const weekEvents = getEventsForPeriod('week', todayDateDayStart, EVENTS);
 
     return (
       <div className="calendar">
@@ -52,7 +56,7 @@ class Calendar extends React.Component {
             {dayHours.map((hour, index) => {
               return (
                 <div key={index} className="calendar__hour">
-                  {hour}
+                  {moment(hour.time).format(FORMAT_HH_mm)}
                 </div>
               )
             })}
@@ -63,7 +67,6 @@ class Calendar extends React.Component {
                 <Day
                   key={index}
                   events={weekEvents}
-                  today={todayDate}
                   day={day}
                   dayHours={dayHours}/>
               )
@@ -78,8 +81,6 @@ class Calendar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     events: state.calendar.events,
-    todayDate: state.calendar.todayDate,
-    dayHours: state.calendar.dayHours,
     weekDays: state.calendar.weekDays,
   }
 };

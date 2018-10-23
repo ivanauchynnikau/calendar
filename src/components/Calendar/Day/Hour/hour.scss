@@ -1,0 +1,28 @@
+.hour {
+  border-bottom: 1px solid grey;
+  &:first-child {
+    border-top: 1px solid grey;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+  &__events {
+    display: flex;
+    max-width: 90%;
+  }
+  &__add-event-btn {
+    display: none;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: .2s ease-out;
+    font-size: 16px;
+    color: #808080bd;
+    height: 100%;
+    box-shadow: 0 0 2px #949494;
+    &:hover {
+      color: rgba(99, 99, 99, 0.74);
+      box-shadow: 0 0 4px #949494;
+    }
+  }
+}

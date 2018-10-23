@@ -18,15 +18,4 @@
     font-size: 14px;
     text-align: center;
   }
-  &__hour {
-    padding: 5px;
-    min-height: 40px;
-    border-bottom: 1px solid grey;
-    &:first-child {
-      border-top: 1px solid grey;
-    }
-    &:last-child {
-      border-bottom: none;
-    }
-  }
 }
