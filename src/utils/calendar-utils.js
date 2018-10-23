@@ -178,18 +178,18 @@ export const calculateEventHeight = (event) => {
   let elementHeight;
   const eventDurationMinutes = Math.abs(moment(event.startDate).diff(moment(event.endDate), 'minutes'));
 
-  if (eventDurationMinutes < 20) { //set minimal height for event, if event duration less than 20 minutes
-    elementHeight = HOUR_CELL_HEIGHT /2;
+  if (eventDurationMinutes < 20) { //set height for event with duration less than 20 minutes
+    elementHeight = HOUR_CELL_HEIGHT / 2;
   }
 
-  if (MINUTES_PER_HOUR - (eventDurationMinutes % MINUTES_PER_HOUR) < 5) {
+  if (MINUTES_PER_HOUR - (eventDurationMinutes % MINUTES_PER_HOUR) < 5) { // set event height for event with duration 1 hour +- 5 minutes
     elementHeight = eventDurationMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR - EVENT_PADDING * 2;
-  } else {
+  } else { // set event height for event with other duration
     elementHeight = eventDurationMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR;
   }
 
   const result = {
-    height: `${elementHeight}px`
+    height: `${Math.round(elementHeight)}px`
   };
 
   return result;

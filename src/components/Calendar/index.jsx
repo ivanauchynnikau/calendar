@@ -16,6 +16,7 @@ import {
   getTodayStartOfDayDate,
   getTodayDate
 } from './../../utils/calendar-utils';
+import { HOUR_CELL_HEIGHT } from "../../../config";
 
 
 class Calendar extends React.Component {
@@ -55,7 +56,7 @@ class Calendar extends React.Component {
           <div className="calendar__hours-list">
             {dayHours.map((hour, index) => {
               return (
-                <div key={index} className="calendar__hour">
+                <div key={index} className="calendar__hour" style={{ minHeight: `${HOUR_CELL_HEIGHT}px` }}>
                   {moment(hour.time).format(FORMAT_HH_mm)}
                 </div>
               )

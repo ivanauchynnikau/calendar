@@ -1,15 +1,17 @@
 .event {
   background: rgba(57, 143, 255, 0.93);
-  min-width: 40px;
-  box-shadow: 1px 0 1px #1f1f1f;
+  min-width: 100px;
   padding: 6px;
   margin-right: 2px;
   transition: background-color .2s ease-out;
   cursor: pointer;
   z-index: 1;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 4px #1f1f1f;
   &:hover {
     background: dodgerblue;
+    z-index: 20 !important;
   }
   &:last-child {
     margin-right: 0;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hour } from './Hour';
+import {Hour} from './Hour';
 
 import {
   getEventsForPeriod,
@@ -21,13 +21,13 @@ export class Day extends React.Component {
     const dayHours = createDayHours(day.date);
     const dayEvents = getEventsForPeriod('day', day.date, events);
 
-    let className = 'day';
+    let dayClassNames = 'day';
     if (getTodayStartOfDayDate() === day.date) {
-      className += ' _current-day';
+      dayClassNames += ' _current-day';
     }
 
     return (
-      <div className={className}>
+      <div className={dayClassNames}>
         <div className="day__header">
           <div className="day__day-name">{day.name}</div>
           <div className="day__date">{day.formattedDate}</div>

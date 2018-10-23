@@ -9,6 +9,8 @@
   &__events {
     display: flex;
     max-width: 90%;
+    &.__many-events {
+    }
   }
   &__add-event-btn {
     display: none;

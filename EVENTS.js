@@ -3,8 +3,13 @@ import moment from 'moment';
 export default [
   {
     name: '2018-10-22 01:00 - 01:30',
+    startDate: moment('2018-10-23 00:00:00').format(),
+    endDate: moment('2018-10-23 06:29:59').format(),
+    description: 'Some text that describe event details etc..'
+  }, {
+    name: '2018-10-22 01:00 - 01:30',
     startDate: moment('2018-10-22 01:00:00').format(),
-    endDate: moment('2018-10-22 01:29:59').format(),
+    endDate: moment('2018-10-22 06:29:59').format(),
     description: 'Some text that describe event details etc..'
   },{
     name: '2018-10-22 01:00 - 02:00',
