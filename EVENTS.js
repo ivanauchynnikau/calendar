@@ -1,4 +1,4 @@
-const JSON_DATA = [
+export default [
   {
     "name": "October 23 00:00-06:30",
     "startDate": "2018-10-23T00:00:00+03:00",

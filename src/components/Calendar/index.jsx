@@ -1,14 +1,17 @@
 import React from 'react';
-import EVENTS from './../../../EVENTS';
 import moment from 'moment';
 import axios from 'axios';
-
 import {connect} from 'react-redux';
 import {Day} from './Day';
+
+import EVENTS from './../../../EVENTS';
+
 import {
   FORMAT_HH_mm,
   FORMAT_LL,
 } from '../../constants'
+
+import { HOUR_CELL_HEIGHT } from "../../../config";
 
 import {
   createDayHours,
@@ -18,35 +21,19 @@ import {
   getTodayDate,
   toggleLoader,
 } from './../../utils/calendar-utils';
-import { HOUR_CELL_HEIGHT } from "../../../config";
-
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  getWeekEvents() {
-    toggleLoader(true);
-    axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
-      .then((response) => {
-        toggleLoader(false);
-        debugger;
-        const weekEvents = response.data;
-        return weekEvents;
-      })
-      .catch( (error) => {
-        toggleLoader(false);
-        console.log('can\'t get week events from the server, error - ', error);
-      });
-  }
-
   componentDidMount() {
-    toggleLoader(true);
 
+    toggleLoader(true);
     axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
       .then((response) => {
         console.log('week events - ', response.data);
+
         const { initStore } = this.props;
         initStore({ weekEvents: response.data });
       })
@@ -54,7 +41,13 @@ class Calendar extends React.Component {
         console.log('can\'t get week events from the server, error - ', error);
       }).then(() => {
         toggleLoader(false);
-    })
+    });
+
+
+    // TO GET DATA from EVENTS.js uncomment this
+    //const { initStore } = this.props;
+    //initStore({ weekEvents: EVENTS });
+
   }
 
   render() {
