@@ -1,7 +1,10 @@
 import React from 'react';
 import { Event } from './Event';
+import moment from "moment";
+
 import {
-  getEventsForCurrentHour
+  getStartEndDateForPeriod,
+  returnError,
 } from "../../../../utils/calendar-utils";
 
 import {
@@ -9,6 +12,7 @@ import {
   HOUR_CELL_HEIGHT,
   MAX_EVENTS_PER_HOUR_LIMIT,
 } from "../../../../../config";
+
 
 export class Hour extends React.Component {
   constructor(props) {
@@ -32,13 +36,38 @@ export class Hour extends React.Component {
     return eventsContainerClassNames;
   }
 
+  getEventsForCurrentHour (date, events) {
+    if (!events || !date) return returnError('getEventsForCurrentHour', '"events" and "date"');
+
+    const period = getStartEndDateForPeriod('hour', date);
+    const result = [];
+
+    events.forEach((event) => {
+      const isEventStartsInCurrentHour =
+        moment(event.startDate).isBefore(moment(period.endHour))  // is event start before current hour ends
+        && (   moment(event.startDate).isAfter(moment(period.startHour))  // is event starts after current hour starts
+        || moment(event.startDate).isSame(moment(period.startHour))); // is event start in the same time that hour start
+
+      const isEventEndsInCurrentDay =
+        (moment(event.endDate).isBefore(moment(period.endDay))  // is event ends before day ends
+          || moment(event.endDate).isSame(moment(period.endDay)));  // is event ends in the same time that day ends
+
+
+      if (isEventStartsInCurrentHour && isEventEndsInCurrentDay) {
+        result.push(event);
+      }
+    });
+
+    return result;
+  };
+
   render() {
     const {
       date,
       events,
     } = this.props;
 
-    const eventsList = getEventsForCurrentHour( date.time, events);
+    const eventsList = this.getEventsForCurrentHour( date.time, events);
 
     return (
       <div className="hour" style={{ padding: `${EVENT_PADDING}px`, height: `${HOUR_CELL_HEIGHT}px` }}>
