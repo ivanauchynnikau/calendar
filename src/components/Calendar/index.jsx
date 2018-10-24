@@ -9,7 +9,6 @@ import {
 } from '../../constants'
 
 import {
-  setPreferences,
   createDayHours,
   createWeekDays,
   getEventsForPeriod,
@@ -25,21 +24,15 @@ class Calendar extends React.Component {
   }
 
   componentWillMount() {
-    setPreferences();
-
     const { initStore } = this.props;
 
     initStore({
       events: EVENTS,
-      weekDays: createWeekDays(),
     });
   }
 
   render() {
-    const {
-      weekDays,
-    } = this.props;
-
+    const weekDays = createWeekDays();
     const todayDate = getTodayDate();
     const todayDateDayStart = getTodayStartOfDayDate();
     const dayHours = createDayHours(todayDateDayStart);
@@ -82,7 +75,6 @@ class Calendar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     events: state.calendar.events,
-    weekDays: state.calendar.weekDays,
   }
 };
 

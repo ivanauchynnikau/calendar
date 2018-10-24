@@ -3,18 +3,12 @@ import 'moment-timezone';
 
 import {
   HOURS_PER_DAY,
-  LOCALE,
-  MOMENT_JS_CONFIG,
 } from "../../config";
 
 import {
   FORMAT_dddd,
   FORMAT_MMMM_D_YYYY,
 } from "../constants";
-
-export const setPreferences = () => {
-  moment.locale(LOCALE, MOMENT_JS_CONFIG);
-};
 
 export const getTodayDate = () => {
   const todayDate = moment().format();
