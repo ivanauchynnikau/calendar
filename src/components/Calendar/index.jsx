@@ -16,7 +16,7 @@ import {
   getEventsForPeriod,
   getTodayStartOfDayDate,
   getTodayDate,
-  togglePreloader,
+  toggleLoader,
 } from './../../utils/calendar-utils';
 import { HOUR_CELL_HEIGHT } from "../../../config";
 
@@ -27,32 +27,33 @@ class Calendar extends React.Component {
   }
 
   getWeekEvents() {
-    togglePreloader(true);
+    toggleLoader(true);
     axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
       .then((response) => {
-        togglePreloader(false);
+        toggleLoader(false);
         debugger;
         const weekEvents = response.data;
         return weekEvents;
       })
       .catch( (error) => {
-        togglePreloader(false);
+        toggleLoader(false);
         console.log('can\'t get week events from the server, error - ', error);
       });
   }
 
   componentDidMount() {
-    togglePreloader(true);
+    toggleLoader(true);
 
     axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
       .then((response) => {
+        console.log('week events - ', response.data);
         const { initStore } = this.props;
         initStore({ weekEvents: response.data });
       })
       .catch( (error) => {
         console.log('can\'t get week events from the server, error - ', error);
       }).then(() => {
-        togglePreloader(false);
+        toggleLoader(false);
     })
   }
 
@@ -68,11 +69,7 @@ class Calendar extends React.Component {
     const todayDate = getTodayDate();
     const todayDateDayStart = getTodayStartOfDayDate();
     const dayHours = createDayHours(todayDateDayStart);
-
     const events = getEventsForPeriod('week', todayDateDayStart, weekEvents);
-
-
-    console.log(this.props);
 
     return (
       <div className="calendar">

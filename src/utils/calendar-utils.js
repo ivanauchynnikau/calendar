@@ -120,8 +120,8 @@ export const returnError = (name, args) => {
   return null;
 };
 
-export const togglePreloader = (flag) => {
-  console.log('preloader' , flag);
+export const toggleLoader = (flag) => {
+  console.log('loader', flag);
 };
 
 
