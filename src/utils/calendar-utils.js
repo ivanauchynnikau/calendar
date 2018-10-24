@@ -23,11 +23,7 @@ export const getTodayStartOfDayDate = () => {
 };
 
 export const createDayHours = (date) => {
-  if (!date) {
-    console.log('getEventsForCurrentHour method is expecting arguments "date"!!!!!');
-    return null;
-  }
-
+  if (!date) returnError('getEventsForCurrentHour', 'date');
 
   let momentDate = moment(date);
   let hoursPerDay = HOURS_PER_DAY;
