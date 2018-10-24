@@ -1,6 +1,8 @@
 import React from 'react';
 import EVENTS from './../../../EVENTS';
 import moment from 'moment';
+import axios from 'axios';
+
 import {connect} from 'react-redux';
 import {Day} from './Day';
 import {
@@ -13,7 +15,8 @@ import {
   createWeekDays,
   getEventsForPeriod,
   getTodayStartOfDayDate,
-  getTodayDate
+  getTodayDate,
+  togglePreloader,
 } from './../../utils/calendar-utils';
 import { HOUR_CELL_HEIGHT } from "../../../config";
 
@@ -23,21 +26,53 @@ class Calendar extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-    const { initStore } = this.props;
+  getWeekEvents() {
+    togglePreloader(true);
+    axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
+      .then((response) => {
+        togglePreloader(false);
+        debugger;
+        const weekEvents = response.data;
+        return weekEvents;
+      })
+      .catch( (error) => {
+        togglePreloader(false);
+        console.log('can\'t get week events from the server, error - ', error);
+      });
+  }
 
-    initStore({
-      events: EVENTS,
-    });
+  componentDidMount() {
+    togglePreloader(true);
+
+    axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
+      .then((response) => {
+        const { initStore } = this.props;
+        initStore({ weekEvents: response.data });
+      })
+      .catch( (error) => {
+        console.log('can\'t get week events from the server, error - ', error);
+      }).then(() => {
+        togglePreloader(false);
+    })
   }
 
   render() {
+    const {
+      weekEvents
+    } = this.props;
+
+    if (!weekEvents.length) return null;
+
+
     const weekDays = createWeekDays();
     const todayDate = getTodayDate();
     const todayDateDayStart = getTodayStartOfDayDate();
     const dayHours = createDayHours(todayDateDayStart);
 
-    const weekEvents = getEventsForPeriod('week', todayDateDayStart, EVENTS);
+    const events = getEventsForPeriod('week', todayDateDayStart, weekEvents);
+
+
+    console.log(this.props);
 
     return (
       <div className="calendar">
@@ -60,7 +95,7 @@ class Calendar extends React.Component {
               return (
                 <Day
                   key={index}
-                  events={weekEvents}
+                  events={events}
                   day={day}
                   dayHours={dayHours}/>
               )
@@ -74,7 +109,7 @@ class Calendar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.calendar.events,
+    weekEvents: state.calendar.weekEvents,
   }
 };
 

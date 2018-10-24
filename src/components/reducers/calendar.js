@@ -5,7 +5,7 @@ export default (state = initialState, action) => {
     case 'INIT':
       return {
         ...state,
-        events: action.data.events,
+        weekEvents: action.data.weekEvents,
       };
     default:
       return initialState;
