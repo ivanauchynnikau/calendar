@@ -13,7 +13,6 @@ import './components/Calendar/Day/day.scss';
 import './components/Calendar/Day/Hour/hour.scss';
 import './components/Calendar/Day/Hour/Event/event.scss';
 
-
 ReactDOM.render(
   <Router history={createHistory()}>
     <Provider store={store}>

@@ -23,7 +23,7 @@ export const getTodayStartOfDayDate = () => {
 };
 
 export const createDayHours = (date) => {
-  if (!date) returnError('getEventsForCurrentHour', 'date');
+  if (!date) returnError('getEventsForCurrentHour', '"date"');
 
   let momentDate = moment(date);
   let hoursPerDay = HOURS_PER_DAY;
@@ -60,7 +60,7 @@ export const createWeekDays = () => {
 };
 
 export const getStartEndDateForPeriod = (periodType, date) => {
-  if (!periodType || !date ) return returnError('getEventsForCurrentHour', '"periodType" and "date"');
+  if (!periodType || !date ) return returnError('getStartEndDateForPeriod', '"periodType" and "date"');
 
   const momentDate = moment(date);
   let result = {};
@@ -103,10 +103,17 @@ export const getEventsForPeriod = (periodType, date, events) => {
   const result = [];
 
   events.forEach((event) => {
-    if ((moment(event.startDate).isAfter(moment(period.start)) || moment(event.startDate).isSame(moment(period.start)))
-      && moment(event.startDate).isBefore(moment(period.end))
-      && moment(event.endDate).isAfter(moment(period.start))
-      && (moment(event.endDate).isBefore(moment(period.end)) || moment(event.endDate).isSame(moment(period.end)))
+    const isEventStartAfterPeriodStart = moment(event.startDate).isAfter(moment(period.start));
+    const isEventStartEqualToPeriodStart = moment(event.startDate).isSame(moment(period.start));
+    const isEventStartBeforePeriodEnd = moment(event.startDate).isBefore(moment(period.end));
+    const isEventEndAfterPeriodStart = moment(event.endDate).isAfter(moment(period.start));
+    const isEventEndBeforePeriodEnd = moment(event.endDate).isBefore(moment(period.end));
+    const isEventStartEqualToPeriodEnd = moment(event.endDate).isSame(moment(period.end));
+
+    if ((isEventStartAfterPeriodStart || isEventStartEqualToPeriodStart)
+      && isEventStartBeforePeriodEnd
+      && isEventEndAfterPeriodStart
+      && (isEventEndBeforePeriodEnd || isEventStartEqualToPeriodEnd)
     ) {
       result.push(event);
     }
@@ -116,12 +123,8 @@ export const getEventsForPeriod = (periodType, date, events) => {
 };
 
 export const returnError = (name, args) => {
-  console.log(`${name} method is expecting argument "${args}"!!!!!`);
+  console.log(`${name} method is expecting argument ${args}!!!!!`);
   return null;
-};
-
-export const toggleLoader = (flag) => {
-  console.log('loader', flag);
 };
 
 

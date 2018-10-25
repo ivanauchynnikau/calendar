@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames'
 import { Event } from './Event';
 import moment from "moment";
 
@@ -18,22 +19,28 @@ export class Hour extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getEventsContainerClassNames = this.getEventsContainerClassNames.bind(this);
+    this.getHourStyles = this.getHourStyles.bind(this);
     this.addEvent = this.addEvent.bind(this);
+    this.isManyEvents = this.isManyEvents.bind(this);
   }
 
   addEvent() {
     console.log('add event for time:', this.props.date.time);
   }
 
-  getEventsContainerClassNames(events) {
-    let eventsContainerClassNames = 'hour__events';
+  getHourStyles() {
+    const result = {
+      padding: `${EVENT_PADDING}px`,
+      height: `${HOUR_CELL_HEIGHT}px`
+    };
 
-    if (events.length > MAX_EVENTS_PER_HOUR_LIMIT) {
-      eventsContainerClassNames += '  __many-events';
-    }
+    return result;
+  }
 
-    return eventsContainerClassNames;
+  isManyEvents(eventsList) {
+    const result = eventsList.length > MAX_EVENTS_PER_HOUR_LIMIT;
+
+    return result;
   }
 
   getEventsForCurrentHour (date, events) {
@@ -45,7 +52,7 @@ export class Hour extends React.Component {
     events.forEach((event) => {
       const isEventStartsInCurrentHour =
         moment(event.startDate).isBefore(moment(period.endHour))  // is event start before current hour ends
-        && (   moment(event.startDate).isAfter(moment(period.startHour))  // is event starts after current hour starts
+        && (moment(event.startDate).isAfter(moment(period.startHour))  // is event starts after current hour starts
         || moment(event.startDate).isSame(moment(period.startHour))); // is event start in the same time that hour start
 
       const isEventEndsInCurrentDay =
@@ -68,10 +75,13 @@ export class Hour extends React.Component {
     } = this.props;
 
     const eventsList = this.getEventsForCurrentHour( date.time, events);
+    const eventsContainerClassNames = cn('hour__events', {
+      '__many-events' : events.length > MAX_EVENTS_PER_HOUR_LIMIT
+    });
 
     return (
-      <div className="hour" style={{ padding: `${EVENT_PADDING}px`, height: `${HOUR_CELL_HEIGHT}px` }}>
-        <div className={this.getEventsContainerClassNames(events)} >
+      <div className="hour" style={this.getHourStyles()}>
+        <div className={eventsContainerClassNames} >
           {eventsList.map((event, index) => {
             return (
               <Event
@@ -79,7 +89,7 @@ export class Hour extends React.Component {
                 event={event}
                 date={date.time}
                 index={index}
-                isManyEvents={eventsList.length > MAX_EVENTS_PER_HOUR_LIMIT}
+                isManyEvents={this.isManyEvents(eventsList)}
               />
             )
           })}

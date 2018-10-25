@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import {connect} from 'react-redux';
-import {Day} from './Day';
+import { connect } from 'react-redux';
+import { Day } from './Day';
 
 import EVENTS from './../../../EVENTS';
 
@@ -11,7 +11,10 @@ import {
   FORMAT_LL,
 } from '../../constants'
 
-import { HOUR_CELL_HEIGHT } from "../../../config";
+import {
+  HOUR_CELL_HEIGHT,
+  WEEK_EVENTS_ENDPOINT
+} from "../../../config";
 
 import {
   createDayHours,
@@ -19,28 +22,29 @@ import {
   getEventsForPeriod,
   getTodayStartOfDayDate,
   getTodayDate,
-  toggleLoader,
 } from './../../utils/calendar-utils';
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.getTodayFormattedDate = this.getTodayFormattedDate.bind(this);
+    this.getCalendarHourStyles = this.getCalendarHourStyles.bind(this);
   }
 
   componentDidMount() {
+    const {
+      initStore,
+    } = this.props;
 
-    toggleLoader(true);
-    axios.get('https://private-13395-calendar38.apiary-mock.com/week-events')
+    axios.get(WEEK_EVENTS_ENDPOINT)
       .then((response) => {
-        console.log('week events - ', response.data);
-
-        const { initStore } = this.props;
         initStore({ weekEvents: response.data });
       })
       .catch( (error) => {
         console.log('can\'t get week events from the server, error - ', error);
       }).then(() => {
-        toggleLoader(false);
+
     });
 
 
@@ -50,16 +54,26 @@ class Calendar extends React.Component {
 
   }
 
+  getTodayFormattedDate () {
+    const result = moment(getTodayDate()).format(FORMAT_LL);
+
+    return result;
+  }
+
+  getCalendarHourStyles () {
+    const result = { minHeight: `${HOUR_CELL_HEIGHT}px` };
+
+    return result;
+  }
+
   render() {
     const {
-      weekEvents
+      weekEvents,
     } = this.props;
 
     if (!weekEvents.length) return null;
 
-
     const weekDays = createWeekDays();
-    const todayDate = getTodayDate();
     const todayDateDayStart = getTodayStartOfDayDate();
     const dayHours = createDayHours(todayDateDayStart);
     const events = getEventsForPeriod('week', todayDateDayStart, weekEvents);
@@ -68,13 +82,13 @@ class Calendar extends React.Component {
       <div className="calendar">
         <div className="calendar__header">
           <h1 className="calendar__title">Calendar</h1>
-          <h2 className="calendar__today">Today is: {moment(todayDate).format(FORMAT_LL)}</h2>
+          <h2 className="calendar__today">Today is: {this.getTodayFormattedDate()}</h2>
         </div>
         <div className="calendar__container">
           <div className="calendar__hours-list">
             {dayHours.map((hour, index) => {
               return (
-                <div key={index} className="calendar__hour" style={{ minHeight: `${HOUR_CELL_HEIGHT}px` }}>
+                <div key={index} className="calendar__hour" style={this.getCalendarHourStyles()}>
                   {moment(hour.time).format(FORMAT_HH_mm)}
                 </div>
               )
