@@ -14,7 +14,7 @@ import {
 import {
   HOUR_CELL_HEIGHT,
   WEEK_EVENTS_ENDPOINT
-} from "../../../config";
+} from '../../../config';
 
 import {
   createDayHours,

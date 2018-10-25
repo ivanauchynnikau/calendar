@@ -3,7 +3,7 @@ import { withRouter, Switch, Route } from 'react-router-dom';
 
 import { Calendar } from '../../components';
 
-const App = (props) => {
+const App = () => {
   return (
     <Switch>
       <Route exact path="/" component={Calendar} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from "moment";
+import moment from 'moment';
 
 import {
   EVENT_PADDING,
@@ -21,7 +21,7 @@ export class Event extends React.Component {
   }
 
   calculateEventHeight(event) {
-    if (!event) if (!event) return returnError('calculateEventHeight', "event");
+    if (!event) if (!event) return returnError('calculateEventHeight', 'event');
 
     let elementHeight;
 
@@ -47,7 +47,7 @@ export class Event extends React.Component {
   };
 
   calculateEventTopOffset(event, date) {
-    if (!event) return returnError('calculateEventHeight', "event");
+    if (!event) return returnError('calculateEventHeight', 'event');
 
     const period = getStartEndDateForPeriod('hour', date);
 

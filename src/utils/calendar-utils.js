@@ -2,12 +2,18 @@ import moment from 'moment';
 
 import {
   HOURS_PER_DAY,
-} from "../../config";
+} from '../../config';
 
 import {
   FORMAT_dddd,
   FORMAT_MMMM_D_YYYY,
-} from "../constants";
+} from '../constants';
+
+export const returnError = (name, args) => {
+  /* eslint-disable */
+  console.log(`${name} method is expecting argument ${args}!!!!!`);
+  return null;
+};
 
 export const getTodayDate = () => {
   const todayDate = moment().format();
@@ -120,11 +126,6 @@ export const getEventsForPeriod = (periodType, date, events) => {
   });
 
   return result;
-};
-
-export const returnError = (name, args) => {
-  console.log(`${name} method is expecting argument ${args}!!!!!`);
-  return null;
 };
 
 
