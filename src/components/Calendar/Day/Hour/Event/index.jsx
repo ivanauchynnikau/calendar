@@ -23,15 +23,16 @@ export class Event extends React.Component {
   calculateEventHeight(event) {
     if (!event) if (!event) return returnError('calculateEventHeight', "event");
 
-
     let elementHeight;
+
     const eventDurationMinutes = Math.abs(moment(event.startDate).diff(moment(event.endDate), 'minutes'));
+    const eventStartMinutesTime = moment(event.startDate).minute();
 
     if (eventDurationMinutes < 20) { //set height for event with duration less than 20 minutes
       elementHeight = HOUR_CELL_HEIGHT / 2;
     }
 
-    if (MINUTES_PER_HOUR - (eventDurationMinutes % MINUTES_PER_HOUR) < 5) { // set event height for event with duration 1 hour +- 5 minutes
+    if ((MINUTES_PER_HOUR - (eventDurationMinutes % MINUTES_PER_HOUR) < 5) && eventStartMinutesTime === 0 ) { // set event height for event with duration 1 hour +- 5 minutes
       elementHeight = eventDurationMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR - EVENT_PADDING * 2;
     } else { // set event height for event with other duration
       elementHeight = eventDurationMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR;
@@ -55,7 +56,7 @@ export class Event extends React.Component {
     if (!(moment(event.startDate).isSame(moment(period.startHour)))) {
       const eventStartOffsetMinutes = Math.abs(moment(event.startDate).diff(moment(period.startHour), 'minutes'));
 
-      topOffset = eventStartOffsetMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR - EVENT_PADDING * 2;
+      topOffset = eventStartOffsetMinutes * HOUR_CELL_HEIGHT / MINUTES_PER_HOUR - EVENT_PADDING;
     }
 
     const roundedTopOffset = Math.round(topOffset);
