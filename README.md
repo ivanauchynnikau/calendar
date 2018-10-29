@@ -15,3 +15,6 @@ app will be on ``localhost:8080``
 
 
 Enjoy!
+
+
+(calendar could show events with duration less than one day)
