@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Day } from './../Day';
+import { Day } from '../Day';
 
 import {
   FORMAT_HH_mm,
@@ -42,6 +42,7 @@ class Calendar extends React.Component {
       .catch( (error) => {
         console.log('can\'t get week events from the server, error - ', error);
       }).then(() => {
+
     });
   }
 
@@ -55,59 +56,6 @@ class Calendar extends React.Component {
     const result = { minHeight: `${HOUR_CELL_HEIGHT}px` };
 
     return result;
-  }
-
-  hoursListRender (dayHours) {
-    if (this.props.location.pathname === '/') return null;
-
-    return <div className="calendar__hours-list">
-      {dayHours.map((hour, index) => {
-        return (
-          <div key={index} className="calendar__hour" style={this.getCalendarHourStyles()}>
-            {moment(hour.time).format(FORMAT_HH_mm)}
-          </div>
-        )
-      })}
-    </div>
-  }
-
-  setActiveComponent({weekDays, events, dayHours, todayDateDayStart}) {
-    const { location } = this.props;
-    const page = location.pathname;
-
-    switch(page) {
-      case '/':
-        return <div className="calendar__days">
-          DEFAULT!
-        </div>;
-
-      case '/week':
-        return <div className="calendar__days">
-          {weekDays.map((day, index) => {
-            return (
-              <Day
-                key={index}
-                events={events}
-                day={day}
-                dayHours={dayHours}/>
-            )
-          })}
-        </div>;
-
-      case '/day':
-        const currentDay = weekDays.find((day) => {
-          return day.date === todayDateDayStart
-        });
-
-        return <div className="calendar__days">
-          <Day
-            events={events}
-            day={currentDay}
-            dayHours={dayHours}/>
-        </div>;
-      default:
-        return 'EMPTY!';
-    }
   }
 
   render() {
@@ -127,15 +75,28 @@ class Calendar extends React.Component {
         <div className="calendar__header">
           <h1 className="calendar__title">Calendar</h1>
           <h2 className="calendar__today">Today is: {this.getTodayFormattedDate()}</h2>
-          <div className="calendar__buttons">
-            <a className="calendar__btn" href='/'>home</a>
-            <a className="calendar__btn" href='week'>week</a>
-            <a className="calendar__btn" href='day'>day</a>
-          </div>
         </div>
         <div className="calendar__container">
-          {this.hoursListRender(dayHours)}
-          {this.setActiveComponent({weekDays, events, dayHours, todayDateDayStart})}
+          <div className="calendar__hours-list">
+            {dayHours.map((hour, index) => {
+              return (
+                <div key={index} className="calendar__hour" style={this.getCalendarHourStyles()}>
+                  {moment(hour.time).format(FORMAT_HH_mm)}
+                </div>
+              )
+            })}
+          </div>
+          <div className="calendar__days">
+            {weekDays.map((day, index) => {
+              return (
+                <Day
+                  key={index}
+                  events={events}
+                  day={day}
+                  dayHours={dayHours}/>
+              )
+            })}
+          </div>
         </div>
       </div>
     );

@@ -6,7 +6,7 @@ import { Calendar } from '../../components';
 const App = (props) => {
   return (
     <Switch>
-      <Route exact path="/" component={Calendar} />
+      <Route path="/" component={Calendar} />
     </Switch>
   )
 };

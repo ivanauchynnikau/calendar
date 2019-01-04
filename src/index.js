@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Switch, Router } from 'react-router-dom';
 
-import store from './components/store';
+import store from './store';
 import { App } from './components';
 
 import './components/App/app.scss';
 import './components/Calendar/calendar.scss';
-import './components/Calendar/Day/day.scss';
-import './components/Calendar/Day/Hour/hour.scss';
-import './components/Calendar/Day/Hour/Event/event.scss';
+import './components/Day/day.scss';
+import './components/Hour/hour.scss';
+import './components/Event/event.scss';
 
 ReactDOM.render(
   <Router history={createHistory()}>

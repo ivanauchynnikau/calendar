@@ -6,12 +6,12 @@ import {
   HOUR_CELL_HEIGHT,
   MAX_EVENTS_PER_HOUR_LIMIT,
   MINUTES_PER_HOUR,
-} from '../../../../../../config';
+} from '../../../config';
 
 import {
   getStartEndDateForPeriod,
   returnError,
-} from '../../../../../utils/calendar-utils'
+} from '../../utils/calendar-utils'
 
 export class Event extends React.Component {
   constructor(props) {

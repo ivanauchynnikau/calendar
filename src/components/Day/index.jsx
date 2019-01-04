@@ -1,12 +1,12 @@
 import React from 'react';
 import cn from 'classnames'
-import { Hour } from './Hour';
+import { Hour } from '../Hour';
 
 import {
   getEventsForPeriod,
   createDayHours,
   getTodayStartOfDayDate,
-} from './../../../utils/calendar-utils';
+} from './../../utils/calendar-utils';
 
 export class Day extends React.Component {
   constructor(props) {

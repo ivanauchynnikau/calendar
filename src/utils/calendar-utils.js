@@ -97,7 +97,10 @@ export const getStartEndDateForPeriod = (periodType, date) => {
 };
 
 export const getEventsForPeriod = (periodType, date, events) => {
-  if (!periodType || !date || !events) return returnError('getEventsForCurrentHour', '"periodType" and "events" and "date"');
+  if (!periodType || !date || !events) return returnError(
+    'getEventsForCurrentHour',
+    '"periodType" and "events" and "date"'
+  );
 
   const period = getStartEndDateForPeriod(periodType, date);
   const result = [];

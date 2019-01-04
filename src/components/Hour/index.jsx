@@ -1,18 +1,18 @@
 import React from 'react';
 import cn from 'classnames'
-import { Event } from './Event';
+import { Event } from '../Event';
 import moment from "moment";
 
 import {
   getStartEndDateForPeriod,
   returnError,
-} from "../../../../utils/calendar-utils";
+} from "../../utils/calendar-utils";
 
 import {
   EVENT_PADDING,
   HOUR_CELL_HEIGHT,
   MAX_EVENTS_PER_HOUR_LIMIT,
-} from "../../../../../config";
+} from "../../../config";
 
 
 export class Hour extends React.Component {
